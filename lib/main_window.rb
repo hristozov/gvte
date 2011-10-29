@@ -38,6 +38,7 @@ module Gvte
 
         #ctrl + shift + c
         if (keyval == 67 and @ctrl and @shift and not @alt)
+          signal_emit_stop("key-press-event")
           @nb.copy
         end
 
