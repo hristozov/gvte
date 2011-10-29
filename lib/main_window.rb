@@ -35,6 +35,16 @@ module Gvte
             @nb.next_page
           end
         end
+
+        #ctrl + shift + c
+        if (keyval == 67 and @ctrl and @shift and not @alt)
+          @nb.copy
+        end
+
+        #ctrl + shift + v
+        if (keyval == 86 and @ctrl and @shift and not @alt)
+          @nb.paste
+        end
       end
 
       signal_connect("key-release-event") do |widget, keyevent|

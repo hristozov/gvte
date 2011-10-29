@@ -49,6 +49,19 @@ module Gvte
     def prev_page
       self.page = ((page - 1)%n_pages)
     end
+
+    def current_term
+      self.get_nth_page(page)
+    end
+
+    def copy
+      #TODO: sanity checks
+      current_term.copy_clipboard
+    end
+
+    def paste
+      current_term.paste_clipboard
+    end
   end
 end
 
