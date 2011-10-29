@@ -29,6 +29,7 @@ module Gvte
 
         #ctrl + tab / ctrl + shift + tab
         if (keyval == 65289 and @ctrl and not @alt)
+          signal_emit_stop("key-press-event")
           if @shift
             @nb.prev_page
           else
@@ -44,6 +45,7 @@ module Gvte
 
         #ctrl + shift + v
         if (keyval == 86 and @ctrl and @shift and not @alt)
+          signal_emit_stop("key-press-event")
           @nb.paste
         end
       end
