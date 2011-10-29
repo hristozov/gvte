@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+require 'gtk2'
+require 'vte'
+
+require "./options_parser"
+require './main_window'
+
+module Gvte
+  Gtk.init
+  win = MainWindow.new(OptionsParser::parse_argv ARGV).set_default_size(400, 400).set_resizable(true).set_decorated(true).show_all
+  Gtk.main
+end
+
