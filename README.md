@@ -1,7 +1,7 @@
 gvte
 ====
 
-A highly minimalistic VTE-based terminal emulator. Inspired by evilvte.
+A highly minimalistic VTE-based terminal emulator. Inspired by [evilvte](http://www.calno.com/evilvte/).
 
 
 The big feature list
@@ -16,3 +16,8 @@ Prerequisites
 * vte
 * trollop
 
+TODO
+----
+* Customization of the VTE colors.
+* Customization of the keyboard shortcuts.
+* Make gvte a gem :)
