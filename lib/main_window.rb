@@ -3,15 +3,14 @@ module Gvte
     def initialize(options)
       super("gvte")
 
-      signal_connect("destroy", &quit)
-      @nb = ShellNotebook.new(options)
-      @nb.add_shell
-      add(@nb)
-
       @ctrl = false
       @alt = false
       @shift = false
 
+      @nb = ShellNotebook.new(options)
+
+      signal_connect("destroy", &quit)
+      
       signal_connect("key-press-event") do |widget, keyevent|
         keyval = keyevent.keyval
         @ctrl = true if keyval == Gdk::Keyval::GDK_Control_L or keyval == Gdk::Keyval::GDK_Control_R
@@ -44,6 +43,14 @@ module Gvte
         @alt = false if keyval == Gdk::Keyval::GDK_Alt_L or keyval == Gdk::Keyval::GDK_Alt_R
         @shift = false if keyval == Gdk::Keyval::GDK_Shift_L or keyval == Gdk::Keyval::GDK_Shift_R
       end
+
+      @nb.signal_connect("page-removed") do
+        quit.call() if @nb.n_pages == 0
+      end
+      
+      @nb.add_shell
+      add(@nb)
+
 
     end
 
