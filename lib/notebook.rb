@@ -10,6 +10,7 @@ module Gvte
     def add_shell(move_focus=true)
       term = Vte::Terminal.new().show_all
       term.signal_connect("window-title-changed", &update_tab_title(term))
+      term.signal_connect("eof", &handle_eof(term))
       pid = term.fork_command(@options[:sh], nil, nil, @options[:dir])
 
       append_page term
@@ -26,6 +27,12 @@ module Gvte
     def update_tab_title term
       Proc.new do
         set_tab_label_text(term,term.window_title)
+      end
+    end
+
+    def handle_eof term
+      Proc.new do
+        remove_page(page_num term)
       end
     end
 
