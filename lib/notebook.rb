@@ -14,7 +14,7 @@ module Gvte
       pid = term.fork_command(@options[:sh], nil, nil, @options[:dir])
 
       append_page term
-      set_page(page_num term) if move_focus
+      self.page = page_num term if move_focus
       set_tab_label_text(term, @options[:sh])
 
       $stderr.puts "Spawned shell (#{pid}) with options #{@options}"
@@ -38,16 +38,16 @@ module Gvte
 
     def toggle_tab_bar
       Proc.new do
-        set_show_tabs(n_pages > 1)
+        self.show_tabs = n_pages > 1
       end
     end
 
     def next_page
-      set_page ((page + 1)%n_pages)
+      self.page = ((page + 1)%n_pages)
     end
 
     def prev_page
-      set_page ((page - 1)%n_pages)
+      self.page = ((page - 1)%n_pages)
     end
   end
 end
