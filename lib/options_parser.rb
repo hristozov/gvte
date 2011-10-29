@@ -1,5 +1,3 @@
-require 'trollop'
-
 module Gvte
   class OptionsParser
     def self.parse_argv(argv)

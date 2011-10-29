@@ -1,5 +1,3 @@
-require './notebook.rb'
-
 module Gvte
   class MainWindow < Gtk::Window
     def initialize(options)

@@ -2,9 +2,11 @@
 
 require 'gtk2'
 require 'vte'
+require 'trollop'
 
-require "./options_parser"
-require './main_window'
+require_relative 'lib/options_parser'
+require_relative 'lib/main_window'
+require_relative 'lib/notebook'
 
 module Gvte
   Gtk.init
