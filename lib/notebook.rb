@@ -31,11 +31,11 @@ module Gvte
       Proc.new do
         title = term.window_title
         if title != nil
-        if @bolded_tabs[term]
-          (get_tab_label term).set_markup "<b>#{title}</b>"
-        else
-          set_tab_label_text term, title
-        end
+          if @bolded_tabs[term]
+            (get_tab_label term).set_markup "<b>#{title}</b>"
+          else
+            set_tab_label_text term, title
+          end
         end
       end
     end
