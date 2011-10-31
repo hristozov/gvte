@@ -20,6 +20,5 @@ TODO
 ----
 * Customization of the VTE look.
 * Customization of the keyboard shortcuts.
-* Ctrl+Shift+C/Ctrl+Shift+V or something like this for manipulating the GTK clipboard.
 * yakuake/guake mode :)
 * Make gvte a gem :)
