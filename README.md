@@ -18,7 +18,8 @@ Prerequisites
 
 TODO
 ----
-* Customization of the VTE look.
+* Add tests wherever possible.
+* Customization of the VTE look - fonts/backgrounds/etc.
 * Customization of the keyboard shortcuts.
 * yakuake/guake mode :)
 * Make gvte a gem :)
