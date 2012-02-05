@@ -12,6 +12,7 @@ where [options] are:
 BANNER
       opt :sh, "Shell to use", :type=>String, :default=>"/bin/sh"
       opt :dir, "Directory to spawn the shell in", :type=>String
+      opt :config, "Location of config file", :type=>String, :default="~/.gvterc"
       end
     end
   end

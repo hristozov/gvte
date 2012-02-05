@@ -1,12 +1,6 @@
 #!/usr/bin/env ruby
-
-require 'gtk2'
-require 'vte'
-require 'trollop'
-
-require_relative 'lib/options_parser'
-require_relative 'lib/main_window'
-require_relative 'lib/notebook'
+$LOAD_PATH.unshift File.dirname(__FILE__) + '/../lib'
+require 'gvte'
 
 module Gvte
   Gtk.init
