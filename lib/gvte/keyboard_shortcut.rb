@@ -11,11 +11,11 @@ module Gvte
     end
 
     def ==(other_shortcut)
-      @action == other_shortcut.action
-      @keycode == other_shortcut.keycode
-      @ctrl == other_shortcut.ctrl
-      @alt == other_shortcut.alt
-      @shift == other_shortcut.shift
+      @action == other_shortcut.action &&
+        @keycode == other_shortcut.keycode &&
+        @ctrl == other_shortcut.ctrl &&
+        @alt == other_shortcut.alt &&
+        @shift == other_shortcut.shift
     end
   end
 end

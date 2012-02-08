@@ -1,4 +1,4 @@
-describe "KeyboardShortcutFactory#get_shortcut" do
+describe "KeyboardShortcutFactory::get_shortcut" do
 
   it "can create shortcuts with one keystroke" do
     shortcut = Gvte::KeyboardShortcutFactory.get_shortcut("foo", 119)
