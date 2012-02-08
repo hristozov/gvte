@@ -1,4 +1,4 @@
-watch( '(lib|bin)/.*\.rb' ) { do_rspec }
+watch( '(bin|lib|spec)/.*\.rb' ) { do_rspec }
 
 def do_rspec
   system "rspec"

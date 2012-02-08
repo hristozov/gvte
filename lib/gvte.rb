@@ -5,6 +5,7 @@ require 'trollop'
 require 'psych'
 
 require 'gvte/config'
+require 'gvte/config_builder'
 require 'gvte/config_parser'
 require 'gvte/keyboard_shortcut'
 require 'gvte/keyboard_shortcut_factory'

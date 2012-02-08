@@ -8,7 +8,8 @@ shortcuts:
     shift : false
     key   : t
 END
-    config = Gvte::ConfigParser.new(raw_config).config
+    config = Gvte::Config.new
+    Gvte::ConfigParser.parse(raw_config, config)
 
     config.shortcuts.size.should eq 1
 
