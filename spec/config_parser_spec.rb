@@ -55,4 +55,43 @@ END
     target_shortcut = Gvte::KeyboardShortcut.new("open_new_window", 116, true, false, false)
     config.shortcuts[0].should  == target_shortcut
   end
+
+  it "can handle malformed keyboard shortcuts definition" do
+    raw_config = <<-END
+shortcuts: 5
+END
+    STDERR.should_receive(:puts).exactly(1).times
+    config = get_config(raw_config)
+
+    config.shortcuts.size.should eq 0
+  end
+
+  it "can parse the shell location" do
+    raw_config = <<-END
+sh: "/bin/bash"
+END
+    config = get_config(raw_config)
+
+    config.sh.should eq "/bin/bash"
+  end
+
+  it "can handle malformed shell location" do
+    raw_config = <<-END
+sh: 5
+END
+    STDERR.should_receive(:puts).exactly(1).times
+    config = get_config(raw_config)
+
+    config.sh.should eq Gvte::Config.new.sh
+  end
+
+
+  it "can parse the starting directory location" do
+    raw_config = <<-END
+dir: "/home/gh"
+END
+    config = get_config(raw_config)
+
+    config.dir.should eq "/home/gh"
+  end
 end
