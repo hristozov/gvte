@@ -1,13 +1,13 @@
 module Gvte
   class MainWindow < Gtk::Window
-    def initialize(options)
+    def initialize(config)
       super("gvte")
 
       @ctrl = false
       @alt = false
       @shift = false
 
-      @nb = ShellNotebook.new(options)
+      @nb = ShellNotebook.new(config)
 
       signal_connect("destroy", &quit)
       

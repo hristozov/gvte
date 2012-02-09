@@ -1,8 +1,8 @@
 module Gvte
   class ShellNotebook < Gtk::Notebook
-    def initialize options
+    def initialize config
       super()
-      @options = options
+      @config = config
       @bolded_tabs = {}
       signal_connect("page-added", &toggle_tab_bar)
       signal_connect("page-removed", &toggle_tab_bar)
@@ -14,13 +14,13 @@ module Gvte
       term.signal_connect("window-title-changed", &update_label(term))
       term.signal_connect("eof", &handle_eof(term))
       term.signal_connect("contents-changed", &handle_contents_changed(term))
-      pid = term.fork_command(@options[:sh], nil, nil, @options[:dir])
+      pid = term.fork_command(@config.sh, nil, nil, @config.dir)
 
       append_page term
       self.page = page_num term if move_focus
-      set_tab_label_text term, @options[:sh]
+      set_tab_label_text term, @config.sh
 
-      $stderr.puts "Spawned shell (#{pid}) with options #{@options}"
+      $stderr.puts "Spawned shell (#{pid}) with options #{@config}"
     end
 
     def remove_current_shell

@@ -10,13 +10,13 @@ A highly minimalistic terminal emulator. Based on VTE.
 
 where [options] are:
 BANNER
-        opt :sh, "Shell to use", :type=>String, :default=>"/bin/sh"
+        opt :sh, "Shell to use", :type=>String, :default=>Config.new.sh
         opt :dir, "Directory to spawn the shell in", :type=>String
-        opt :config, "Location of config file", :type=>String, :default=>"~/.gvterc"
+        opt :config, "Location of config file", :type=>String, :default=>Config.new.config
       end
-      config.sh = options.sh
-      config.dir = options.dir
-      config.config = options.config
+      config.sh = options.sh if options.sh_given
+      config.dir = options.dir if options.dir_given
+      config.config = options.config if options.config_given
     end
   end
 end
