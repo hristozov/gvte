@@ -11,12 +11,14 @@ module Gvte
       register_handlers
 
       signal_connect("key-press-event") do |widget, keyevent|
-        keyval = Gdk::Keyval.to_lower(keyevent.keyval)
+        keyval = Gdk::Keyval.to_lower(keyevent.keyval) #XXX: This seems useless.
         state = keyevent.state
-        @keystroke_manager.send_key(keyval,
-                                    state.control_mask?,
-                                    state.mod1_mask?,
-                                    state.shift_mask?)
+        Gdk::Keymap.default.get_entries_for_keyval(keyval).each { |entry|
+          @keystroke_manager.send_key(entry[0],
+                                      state.control_mask?,
+                                      state.mod1_mask?,
+                                      state.shift_mask?)
+        }
         false # false for success.
       end
 
