@@ -3,7 +3,7 @@ module Gvte
     attr_accessor :shortcuts, :sh, :dir, :config
 
     def initialize
-      @sh = "/bin/sh"
+      @sh = "/bin/bash"
       @shortcuts = []
       @config = "~/.gvterc"
     end

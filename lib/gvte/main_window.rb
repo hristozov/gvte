@@ -18,6 +18,7 @@ module Gvte
         @shift = true if keyval == Gdk::Keyval::GDK_Shift_L or keyval == Gdk::Keyval::GDK_Shift_R
 
         @keystroke_manager.send_key(keyval, @ctrl, @alt, @shift)
+        false # false for success.
       end
 
       signal_connect("key-release-event") do |widget, keyevent|

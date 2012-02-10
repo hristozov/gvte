@@ -7,13 +7,13 @@ describe "OptionsParser::parse" do
 
   it "has appropriate default values" do
     config = get_config([])
-    config.sh.should eq "/bin/sh"
+    config.sh.should eq "/bin/bash"
     config.config.should eq "~/.gvterc"
   end
 
   it "can parse the shell path" do
-    config = get_config(["--sh=/bin/bash"])
-    config.sh.should eq "/bin/bash"
+    config = get_config(["--sh=/bin/zsh"])
+    config.sh.should eq "/bin/zsh"
   end
 
   it "can parse the location of the start dir" do
@@ -36,7 +36,7 @@ describe "OptionsParser::parse" do
     }
 
     argtest.call(["--foo"])
-    argtest.call(["-sh=/bin/bash"])
+    argtest.call(["-sh=/bin/zsh"])
     argtest.call(["--sh"])
     argtest.call(["--dir"])
     argtest.call(["--config"])
