@@ -2,6 +2,8 @@ module Gvte
   class ConfigParser
     def self.parse(text, config)
       config_hash = Psych::load(text)
+      # we'll get a FalseClass with an empty config
+      return unless config_hash.is_a? Hash
       config.shortcuts = keyboard_shortcuts(config_hash)
       if shell = sh(config_hash) then
         config.sh = shell
@@ -18,8 +20,8 @@ module Gvte
 
     def self.keyboard_shortcuts(hash)
       shortcuts = hash['shortcuts']
-      return [] if not shortcuts
-      if not shortcuts.is_a? Array then
+      return [] unless shortcuts
+      unless shortcuts.is_a? Array then
         config_warning("'shortcuts' should be a list. Ignoring the config directive.")
         return []
       end
@@ -35,8 +37,8 @@ module Gvte
 
     def self.sh(hash)
       sh = hash['sh']
-      return nil if not sh
-      if not sh.is_a? String then
+      return nil unless sh
+      unless sh.is_a? String then
         config_warning("'sh' should be a string. Ignoring the config directive.")
         return nil
       end
@@ -45,8 +47,8 @@ module Gvte
 
     def self.dir(hash)
       dir = hash['dir']
-      return nil if not dir
-      if not dir.is_a? String then
+      return nil unless dir
+      unless dir.is_a? String then
         config_warning("'dir' should be a string. Ignoring the config directive.")
         return nil
       end

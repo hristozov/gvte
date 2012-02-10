@@ -7,5 +7,12 @@ module Gvte
       @shortcuts = []
       @config = "~/.gvterc"
     end
+
+    def ==(other_config)
+      @sh  == other_config.sh &&
+        @shortcuts == other_config.shortcuts &&
+        @dir == other_config.dir &&
+        @config == other_config.config
+    end
   end
 end

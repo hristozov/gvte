@@ -4,11 +4,13 @@ require 'trollop'
 
 require 'psych'
 
+require 'gvte/actions'
 require 'gvte/config'
 require 'gvte/config_builder'
 require 'gvte/config_parser'
 require 'gvte/keyboard_shortcut'
 require 'gvte/keyboard_shortcut_factory'
+require 'gvte/keystroke_manager'
 require 'gvte/main_window'
 require 'gvte/notebook'
 require 'gvte/options_parser'

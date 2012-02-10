@@ -5,9 +5,10 @@ module Gvte
     def initialize(action, keycode=nil, ctrl=false, alt=false, shift=false)
       @action = action
       @keycode = keycode
-      @ctrl = ctrl
-      @alt = alt
-      @shift = shift
+      #XXX: Ugly :(
+      @ctrl = ctrl ? ctrl : false
+      @alt = alt ? alt : false
+      @shift = shift ? shift : false
     end
 
     def ==(other_shortcut)
