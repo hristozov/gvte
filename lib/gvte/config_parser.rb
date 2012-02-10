@@ -1,5 +1,8 @@
 module Gvte
+  # Responsible for parsing the configuration file.
   class ConfigParser
+    # Parses the text contents of the config file and puts them in the given
+    # config object.
     def self.parse(text, config)
       config_hash = Psych::load(text)
       # we'll get a FalseClass with an empty config

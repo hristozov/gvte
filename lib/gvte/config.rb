@@ -1,6 +1,15 @@
 module Gvte
+  # Holds the configuration options (given either by a config file or
+  # command-line options). Here we have some default values.
   class Config
-    attr_accessor :shortcuts, :sh, :dir, :config
+    # The location of the config file.
+    attr_accessor :config
+    # The working directory for the newly created shells.
+    attr_accessor :dir
+    # The location of the command interpreter.
+    attr_accessor :sh
+    # A list with the keyboard shortcuts.
+    attr_accessor :shortcuts
 
     def initialize
       @sh = "/bin/bash"

@@ -1,5 +1,8 @@
 module Gvte
+  # Responsible for parsing the command-line arguments.
   class OptionsParser
+    # Parses the arguments given in the argv given and puts them in the config
+    # object given.
     def self.parse(argv, config)
       options = Trollop::options (argv) do
         version "gvte 0.0.0"

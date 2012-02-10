@@ -2,30 +2,14 @@ module Gvte
   class MainWindow < Gtk::Window
     def initialize(config)
       super("gvte")
-      @keystroke_manager = KeystrokeManager.new(config.shortcuts)
-
-      @nb = ShellNotebook.new(config)
-
+      @keystroke_manager = GTKKeystrokeManagerFactory.get_manager(config, self)
       signal_connect("destroy", &quit)
-
       register_handlers
-
-      signal_connect("key-press-event") do |widget, keyevent|
-        keyval = Gdk::Keyval.to_lower(keyevent.keyval) #XXX: This seems useless.
-        state = keyevent.state
-        Gdk::Keymap.default.get_entries_for_keyval(keyval).each { |entry|
-          @keystroke_manager.send_key(entry[0],
-                                      state.control_mask?,
-                                      state.mod1_mask?,
-                                      state.shift_mask?)
-        }
-        false # false for success.
-      end
-
+      
+      @nb = ShellNotebook.new(config)
       @nb.signal_connect("page-removed") do
         quit.call() if @nb.n_pages == 0
       end
-      
       @nb.add_shell
       add(@nb)
     end
