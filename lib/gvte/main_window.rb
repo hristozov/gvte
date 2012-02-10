@@ -3,31 +3,23 @@ module Gvte
     def initialize(config)
       super("gvte")
       @keystroke_manager = KeystrokeManager.new(config.shortcuts)
-      @ctrl = @alt = @shift = false
 
       @nb = ShellNotebook.new(config)
 
       signal_connect("destroy", &quit)
 
       register_handlers
-      
+
       signal_connect("key-press-event") do |widget, keyevent|
         keyval = keyevent.keyval
-        @ctrl = true if keyval == Gdk::Keyval::GDK_Control_L or keyval == Gdk::Keyval::GDK_Control_R
-        @alt = true if keyval == Gdk::Keyval::GDK_Alt_L or keyval == Gdk::Keyval::GDK_Alt_R
-        @shift = true if keyval == Gdk::Keyval::GDK_Shift_L or keyval == Gdk::Keyval::GDK_Shift_R
-
-        @keystroke_manager.send_key(keyval, @ctrl, @alt, @shift)
+        state = keyevent.state
+        @keystroke_manager.send_key(keyval,
+                                    state.control_mask?,
+                                    state.mod1_mask?,
+                                    state.shift_mask?)
         false # false for success.
       end
 
-      signal_connect("key-release-event") do |widget, keyevent|
-        keyval = keyevent.keyval
-        @ctrl = false if keyval == Gdk::Keyval::GDK_Control_L or keyval == Gdk::Keyval::GDK_Control_R
-        @alt = false if keyval == Gdk::Keyval::GDK_Alt_L or keyval == Gdk::Keyval::GDK_Alt_R
-        @shift = false if keyval == Gdk::Keyval::GDK_Shift_L or keyval == Gdk::Keyval::GDK_Shift_R
-      end
-      
       @nb.signal_connect("page-removed") do
         quit.call() if @nb.n_pages == 0
       end
