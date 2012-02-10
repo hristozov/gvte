@@ -3,10 +3,6 @@ gvte
 
 A minimalistic VTE-based terminal emulator. Inspired by [evilvte](http://www.calno.com/evilvte/).
 
-Goal
------
-Have your job done without unnecessary distractions and the need to have a PhD in Computer Science to configure your terminal emulator. The latter is not a joke - in order to customize *evilvte* you have to change some poorly-documented "#define"-s in the source code and recompile it.
-
 The bad sides
 -------------
 * It is an univeristy project in alpha phase.
@@ -32,6 +28,6 @@ TODO
 ----
 * Add tests wherever possible.
 * Customization of the VTE look - fonts/backgrounds/etc.
-* Customization of the keyboard shortcuts.
+* Accept ASCII characters for keyboard shortcuts in the config.
 * yakuake/guake mode :)
 * Make gvte a gem :)
