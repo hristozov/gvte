@@ -9,7 +9,7 @@ module Gvte
       OptionsParser::parse(@argv, options)
       #XXX: check if the config file is readable
       if options.config != nil and File.exists?(options.config) then
-        ConfigParser::parser(File.open(options.config).read, options)
+        ConfigParser::parse(File.open(options.config).read, options)
       end
       options
     end

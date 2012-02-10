@@ -2,14 +2,14 @@ module Gvte
   class MainWindow < Gtk::Window
     def initialize(config)
       super("gvte")
-
-      @ctrl = false
-      @alt = false
-      @shift = false
+      @keystroke_manager = KeystrokeManager.new(config.shortcuts)
+      @ctrl = @alt = @shift = false
 
       @nb = ShellNotebook.new(config)
 
       signal_connect("destroy", &quit)
+
+      register_handlers
       
       signal_connect("key-press-event") do |widget, keyevent|
         keyval = keyevent.keyval
@@ -17,37 +17,7 @@ module Gvte
         @alt = true if keyval == Gdk::Keyval::GDK_Alt_L or keyval == Gdk::Keyval::GDK_Alt_R
         @shift = true if keyval == Gdk::Keyval::GDK_Shift_L or keyval == Gdk::Keyval::GDK_Shift_R
 
-        #ctrl + t
-        if (keyval == 116 and @ctrl and not @alt)
-          @nb.add_shell
-        end
-
-        #ctrl + w
-        if (keyval == 119 and @ctrl and not @alt)
-          @nb.remove_current_shell
-        end
-
-        #ctrl + tab / ctrl + shift + tab
-        if (keyval == 65289 and @ctrl and not @alt)
-          signal_emit_stop("key-press-event")
-          if @shift
-            @nb.prev_page
-          else
-            @nb.next_page
-          end
-        end
-
-        #ctrl + shift + c
-        if (keyval == 67 and @ctrl and @shift and not @alt)
-          signal_emit_stop("key-press-event")
-          @nb.copy
-        end
-
-        #ctrl + shift + v
-        if (keyval == 86 and @ctrl and @shift and not @alt)
-          signal_emit_stop("key-press-event")
-          @nb.paste
-        end
+        @keystroke_manager.send_key(keyval, @ctrl, @alt, @shift)
       end
 
       signal_connect("key-release-event") do |widget, keyevent|
@@ -56,15 +26,43 @@ module Gvte
         @alt = false if keyval == Gdk::Keyval::GDK_Alt_L or keyval == Gdk::Keyval::GDK_Alt_R
         @shift = false if keyval == Gdk::Keyval::GDK_Shift_L or keyval == Gdk::Keyval::GDK_Shift_R
       end
-
+      
       @nb.signal_connect("page-removed") do
         quit.call() if @nb.n_pages == 0
       end
       
       @nb.add_shell
       add(@nb)
+    end
 
+    def register_handlers
+      @keystroke_manager.register_handler(Actions::ADD_TAB) { |k|
+        @nb.add_shell
+      }
 
+      @keystroke_manager.register_handler(Actions::CLOSE_CURRENT_TAB) { |k|
+        @nb.remove_current_shell
+      }
+
+      @keystroke_manager.register_handler(Actions::COPY) { |k|
+        signal_emit_stop("key-press-event")
+        @nb.copy
+      }
+
+      @keystroke_manager.register_handler(Actions::NEXT_TAB) { |k|
+        signal_emit_stop("key-press-event")
+        @nb.next_page
+      }
+
+      @keystroke_manager.register_handler(Actions::PASTE) { |k|
+        signal_emit_stop("key-press-event")
+        @nb.paste
+      }
+
+      @keystroke_manager.register_handler(Actions::PREVIOUS_TAB) { |k|
+        signal_emit_stop("key-press-event")
+        @nb.next_page
+      }
     end
 
     def quit

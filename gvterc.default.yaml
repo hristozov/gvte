@@ -1,0 +1,28 @@
+shortcuts :
+  - action : add_tab
+    ctrl   : true
+    key    : t
+  
+  - action : close_current_tab
+    ctrl   : true
+    key    : w
+  
+  - action : copy
+    ctrl   : true
+    shift  : true
+    key    : c
+  
+  - action : next_tab
+    ctrl   : true
+    key    : 65289
+  
+  - action : previous_tab
+    ctrl   : true
+    shift  : true
+    key    : 65289
+
+  - action : paste
+    ctrl   : true
+    shift  : true
+    key    : v
+

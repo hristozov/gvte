@@ -2,7 +2,7 @@ module Gvte
   class KeystrokeManager
     def initialize(shortcuts=[])
       @shortcuts = shortcuts.clone
-      @actions = Hash.new([])
+      @actions = {}
     end
 
     def add_keystroke(keystroke)
@@ -10,7 +10,8 @@ module Gvte
     end
 
     def register_handler(action, &handler)
-      @actions[action].push(handler)
+      @actions[action] = [] if @actions[action].nil?
+      @actions[action] << handler
     end
 
     def send_key(keycode, ctrl=false, alt=false, shift=false)
