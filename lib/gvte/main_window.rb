@@ -11,7 +11,7 @@ module Gvte
       register_handlers
 
       signal_connect("key-press-event") do |widget, keyevent|
-        keyval = keyevent.keyval
+        keyval = Gdk::Keyval.to_lower(keyevent.keyval)
         state = keyevent.state
         @keystroke_manager.send_key(keyval,
                                     state.control_mask?,
@@ -54,7 +54,7 @@ module Gvte
 
       @keystroke_manager.register_handler(Actions::PREVIOUS_TAB) { |k|
         signal_emit_stop("key-press-event")
-        @nb.next_page
+        @nb.prev_page
       }
     end
 

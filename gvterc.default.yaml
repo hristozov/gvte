@@ -19,7 +19,7 @@ shortcuts :
   - action : previous_tab
     ctrl   : true
     shift  : true
-    key    : 65289
+    key    : 65056
 
   - action : paste
     ctrl   : true
