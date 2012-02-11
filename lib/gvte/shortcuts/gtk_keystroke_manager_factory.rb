@@ -4,7 +4,6 @@ module Gvte
   class GTKKeystrokeManagerFactory
     # Constructs the manager with the given config instance and target widget.
     def self.get_manager(config, widget)
-      p config.shortcuts
       manager = KeystrokeManager.new(config.shortcuts)
 
       widget.signal_connect("key-press-event") do |widget, keyevent|

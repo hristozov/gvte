@@ -1,12 +1,44 @@
 module Gvte
   class ShellNotebook < Gtk::Notebook
-    def initialize config
+    def initialize(config, keystroke_manager)
       super()
       @config = config
       @bolded_tabs = {}
+      @keystroke_manager = keystroke_manager
+      register_handlers
       signal_connect("page-added", &toggle_tab_bar)
       signal_connect("page-removed", &toggle_tab_bar)
       signal_connect("switch-page", &handle_switch_page)
+    end
+
+    def register_handlers
+      @keystroke_manager.register_handler(Actions::ADD_TAB) { |k|
+        add_shell
+      }
+
+      @keystroke_manager.register_handler(Actions::CLOSE_CURRENT_TAB) { |k|
+        remove_current_shell
+      }
+
+      @keystroke_manager.register_handler(Actions::COPY) { |k|
+        signal_emit_stop("key-press-event")
+        copy
+      }
+
+      @keystroke_manager.register_handler(Actions::NEXT_TAB) { |k|
+        signal_emit_stop("key-press-event")
+        next_page
+      }
+
+      @keystroke_manager.register_handler(Actions::PASTE) { |k|
+        signal_emit_stop("key-press-event")
+        paste
+      }
+
+      @keystroke_manager.register_handler(Actions::PREVIOUS_TAB) { |k|
+        signal_emit_stop("key-press-event")
+        prev_page
+      }
     end
 
     def add_shell(move_focus=true)
