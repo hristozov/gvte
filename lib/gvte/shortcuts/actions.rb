@@ -13,5 +13,7 @@ module Gvte
     PASTE = "paste"
     # Moves to the previous (left) tab.
     PREVIOUS_TAB = "previous_tab"
+    # Resets the currently focused terminal.
+    RESET = "reset"
   end
 end

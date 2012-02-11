@@ -39,6 +39,10 @@ module Gvte
         signal_emit_stop("key-press-event")
         prev_page
       }
+
+      @keystroke_manager.register_handler(Actions::RESET) { |k|
+        current_term.reset(true, true)
+      }
     end
 
     def add_shell(move_focus=true)

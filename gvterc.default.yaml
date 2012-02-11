@@ -26,3 +26,8 @@ shortcuts :
     shift  : true
     key    : 55
 
+  - action : reset
+    ctrl   : true
+    alt    : true
+    key    : 27
+
