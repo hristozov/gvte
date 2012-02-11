@@ -10,10 +10,10 @@ describe "KeyboardShortcutFactory::get_shortcut" do
   end
 
   it "can handle ASCII keycodes" do
-    pending "Needs a X11 keycode <-> ASCII code mapping."
+    #pending "Needs a X11 keycode <-> ASCII code mapping."
     shortcut = Gvte::KeyboardShortcutFactory.get_shortcut("foo", "w")
     shortcut.action.should eq "foo"
-    shortcut.keycode.should eq 119
+    shortcut.keycode.should eq 25
     shortcut.ctrl.should eq false
     shortcut.alt.should eq false
     shortcut.shift.should eq false

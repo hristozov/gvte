@@ -24,7 +24,7 @@ END
   end
 
   it "can parse a plain keystroke" do
-    pending "Needs a X11 keycode <-> ASCII code mapping."
+    #pending "Needs a X11 keycode <-> ASCII code mapping."
     raw_config = <<-END
 shortcuts:
   - action: open_new_window
@@ -37,7 +37,7 @@ END
    
     config.shortcuts.size.should eq 1
 
-    target_shortcut = Gvte::KeyboardShortcut.new("open_new_window", 116, true, false, false)
+    target_shortcut = Gvte::KeyboardShortcut.new("open_new_window", 28, true, false, false)
     config.shortcuts[0].should  == target_shortcut
   end
 
@@ -59,7 +59,7 @@ END
   end
 
   it "is not case-sensitive when parsing keystrokes" do
-    pending "Needs a X11 keycode <-> ASCII code mapping."
+    #pending "Needs a X11 keycode <-> ASCII code mapping."
     raw_config = <<-END
 shortcuts:
   - action: open_new_window
@@ -72,7 +72,7 @@ END
     
     config.shortcuts.size.should eq 1
 
-    target_shortcut = Gvte::KeyboardShortcut.new("open_new_window", 116, true, false, false)
+    target_shortcut = Gvte::KeyboardShortcut.new("open_new_window", 28, true, false, false)
     config.shortcuts[0].should  == target_shortcut
   end
 
