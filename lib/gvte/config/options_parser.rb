@@ -4,7 +4,7 @@ module Gvte
     # Parses the arguments given in the argv given and puts them in the config
     # object given.
     def self.parse(argv, config)
-      options = Trollop::options (argv) do
+      options = Trollop::options(argv) do
         version "gvte 0.0.0"
         banner <<BANNER
 A highly minimalistic terminal emulator. Based on VTE.

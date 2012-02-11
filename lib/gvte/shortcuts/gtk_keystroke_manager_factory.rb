@@ -6,7 +6,7 @@ module Gvte
     def self.get_manager(config, widget)
       manager = KeystrokeManager.new(config.shortcuts)
 
-      widget.signal_connect("key-press-event") do |widget, keyevent|
+      widget.signal_connect("key-press-event") do |signal_target, keyevent|
         keyval = Gdk::Keyval.to_lower(keyevent.keyval) #XXX: This seems useless. 
         state = keyevent.state
         Gdk::Keymap.default.get_entries_for_keyval(keyval).each { |entry|

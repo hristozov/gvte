@@ -46,17 +46,14 @@ module Gvte
     end
 
     def add_shell(move_focus=true)
-      term = Vte::Terminal.new().show_all
+      term = Term.new(@config).show_all
       term.signal_connect("window-title-changed", &update_label(term))
       term.signal_connect("eof", &handle_eof(term))
       term.signal_connect("contents-changed", &handle_contents_changed(term))
-      pid = term.fork_command(@config.sh, nil, nil, @config.dir)
 
       append_page term
       self.page = page_num term if move_focus
       set_tab_label_text term, @config.sh
-
-      $stderr.puts "Spawned shell (#{pid}) with options #{@config}"
     end
 
     def remove_current_shell

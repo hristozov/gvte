@@ -5,7 +5,7 @@ require 'gvte'
 module Gvte
   Gtk.init
   config = ConfigBuilder.new(ARGV).config
-  win = MainWindow.new(config).set_default_size(400, 400).set_resizable(true).set_decorated(true).show_all
+  MainWindow.new(config).set_default_size(400, 400).set_resizable(true).set_decorated(true).show_all
   Gtk.main
 end
 
