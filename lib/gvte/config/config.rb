@@ -2,7 +2,7 @@ module Gvte
   # Holds the configuration options (given either by a config file or
   # command-line options). Here we have some default values.
   class Config
-    # The background color.
+    # The background color. An array with the three RGB values.
     attr_accessor :background_color
     # The background image for the terminal.
     attr_accessor :background_image
@@ -12,7 +12,7 @@ module Gvte
     attr_accessor :dir
     # A description of the font to be used (e.g., "monospace 8")
     attr_accessor :font
-    # The foreground color for the terminal.
+    # The foreground color for the terminal. An array with the three RGB values.
     attr_accessor :foreground_color
     # The size of the line buffer.
     attr_accessor :scrollback_lines
