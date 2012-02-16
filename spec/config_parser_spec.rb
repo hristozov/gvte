@@ -23,6 +23,113 @@ END
     config.should eq Gvte::Config.new
   end
 
+  it "can parse the transparency flag" do
+    raw_config = <<-END
+transparent : true
+END
+    config = get_config(raw_config)
+    config.transparent.should eq true
+  end
+
+  it "can handle malformed transparency flag" do
+    raw_config = <<-END
+transparent : 1337
+END
+    expect{get_config(raw_config)}.to raise_error(RuntimeError)
+  end
+
+  it "can parse the scrollback lines value" do
+    raw_config = <<-END
+scrollback_lines : 550
+END
+    config = get_config(raw_config)
+    config.scrollback_lines.should eq 550
+  end
+
+  it "can handle malformed scrollback lines value" do
+    raw_config = <<-END
+scrollback_lines : "boo"
+END
+    expect{get_config(raw_config)}.to raise_error(RuntimeError)
+  end
+
+  it "can parse the font value" do
+    raw_config = <<-END
+font : "monospace 8"
+END
+    config = get_config(raw_config)
+    config.font.should eq "monospace 8"
+  end
+
+  it "can handle malformed font value" do
+    raw_config = <<-END
+scrollback_lines : 7
+END
+    expect{get_config(raw_config)}.to raise_error(RuntimeError)
+  end
+
+  it "can parse the termtype value" do
+    raw_config = <<-END
+termtype : "xterm"
+END
+    config = get_config(raw_config)
+    config.termtype.should eq "xterm"
+  end
+
+  it "can handle malformed termtype value" do
+    raw_config = <<-END
+termtype : 7
+END
+    expect{get_config(raw_config)}.to raise_error(RuntimeError)
+  end
+
+  it "can parse the rows value" do
+    raw_config = <<-END
+rows : 25
+END
+    config = get_config(raw_config)
+    config.rows.should eq 25
+  end
+
+  it "can handle malformed rows value" do
+    raw_config = <<-END
+rows : "bbb"
+END
+    expect{get_config(raw_config)}.to raise_error(RuntimeError)
+  end
+
+  it "can parse the columns value" do
+    raw_config = <<-END
+columns : 15
+END
+    config = get_config(raw_config)
+    config.columns.should eq 15
+  end
+
+  it "can handle malformed columns value" do
+    raw_config = <<-END
+columns : "aaa"
+END
+    expect{get_config(raw_config)}.to raise_error(RuntimeError)
+  end
+
+  it "can parse the background_image value" do
+    raw_config = <<-END
+background_image : "/home/gh/1.png"
+END
+    config = get_config(raw_config)
+    config.background_image.should eq "/home/gh/1.png"
+  end
+
+  it "can handle malformed background_image value" do
+    raw_config = <<-END
+background_image : true
+END
+    expect{get_config(raw_config)}.to raise_error(RuntimeError)
+  end
+
+  # TODO: colors
+
   it "can parse a plain keystroke" do
     #pending "Needs a X11 keycode <-> ASCII code mapping."
     raw_config = <<-END
@@ -41,7 +148,7 @@ END
     config.shortcuts[0].should  == target_shortcut
   end
 
-  it "can parse a ascii-coded keystroke" do
+  it "can parse an ascii-coded keystroke" do
     raw_config = <<-END
 shortcuts:
   - action: open_new_window
@@ -88,17 +195,13 @@ END
 
     target_shortcut = Gvte::KeyboardShortcut.new("open_new_window", 28, false, false, false)
     config.shortcuts[0].should  == target_shortcut
-
   end
 
   it "can handle malformed keyboard shortcuts definition" do
     raw_config = <<-END
 shortcuts: 5
 END
-    STDERR.should_receive(:puts).exactly(1).times
-    config = get_config(raw_config)
-
-    config.shortcuts.size.should eq 0
+    expect{get_config(raw_config)}.to raise_error(RuntimeError)
   end
 
   it "can parse the shell location" do
@@ -114,10 +217,7 @@ END
     raw_config = <<-END
 sh: 5
 END
-    STDERR.should_receive(:puts).exactly(1).times
-    config = get_config(raw_config)
-
-    config.sh.should eq Gvte::Config.new.sh
+    expect{get_config(raw_config)}.to raise_error(RuntimeError)
   end
 
   it "can parse the starting directory location" do
@@ -133,10 +233,7 @@ END
     raw_config = <<-END
 dir: true
 END
-    STDERR.should_receive(:puts).exactly(1).times
-    config = get_config(raw_config)
-
-    config.dir.should eq Gvte::Config.new.dir
+    expect{get_config(raw_config)}.to raise_error(RuntimeError)
   end
 
 end

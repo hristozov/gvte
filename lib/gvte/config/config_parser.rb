@@ -6,14 +6,31 @@ module Gvte
     def self.parse(text, config)
       config_hash = Psych::load(text)
       # we'll get a FalseClass with an empty config
+      #return unless config_hash.is_a? Hash
+      #config.shortcuts = keyboard_shortcuts(config_hash)
+      #if shell = sh(config_hash) then
+      #  config.sh = shell
+      #end
+      #if directory = dir(config_hash) then
+      #  config.dir = directory
+      #end
+      
       return unless config_hash.is_a? Hash
-      config.shortcuts = keyboard_shortcuts(config_hash)
-      if shell = sh(config_hash) then
-        config.sh = shell
-      end
-      if directory = dir(config_hash) then
-        config.dir = directory
-      end
+      Config::variables.each { |variable|
+        value = config_hash[variable.to_s]
+        next unless value
+        parsed_value = if self.respond_to?(variable) then
+                         self.send(variable, value)
+                       else
+                         type = Config::variable_type variable
+                         type = Object unless type
+                         unless value.is_a? type
+                           raise "Invalid type given for variable " + variable.to_s
+                         end
+                         value
+                       end
+        config.send(variable.to_s + "=", parsed_value)
+      }
     end
 
     private
@@ -21,13 +38,9 @@ module Gvte
       STDERR.puts "WARNING: (config) " + text
     end
 
-    def self.keyboard_shortcuts(hash)
-      shortcuts = hash['shortcuts']
+    def self.shortcuts(shortcuts)
       return [] unless shortcuts
-      unless shortcuts.is_a? Array then
-        config_warning("'shortcuts' should be a list. Ignoring the config directive.")
-        return []
-      end
+      raise "shortcuts should be a list" unless shortcuts.is_a? Array
       shortcuts.map { |item|
         KeyboardShortcutFactory.get_shortcut(
           item['action'],
@@ -36,26 +49,6 @@ module Gvte
           item['alt'],
           item['shift'])
       }
-    end
-
-    def self.sh(hash)
-      sh = hash['sh']
-      return nil unless sh
-      unless sh.is_a? String then
-        config_warning("'sh' should be a string. Ignoring the config directive.")
-        return nil
-      end
-      sh
-    end
-
-    def self.dir(hash)
-      dir = hash['dir']
-      return nil unless dir
-      unless dir.is_a? String then
-        config_warning("'dir' should be a string. Ignoring the config directive.")
-        return nil
-      end
-      dir
     end
   end
 end
