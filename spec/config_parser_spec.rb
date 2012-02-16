@@ -63,7 +63,7 @@ END
 
   it "can handle malformed font value" do
     raw_config = <<-END
-scrollback_lines : 7
+font : 7
 END
     expect{get_config(raw_config)}.to raise_error(RuntimeError)
   end

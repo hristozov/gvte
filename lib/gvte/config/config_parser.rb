@@ -38,6 +38,11 @@ module Gvte
       STDERR.puts "WARNING: (config) " + text
     end
 
+    def self.transparent(value)
+      raise "transparent should be a true/false flag" unless value == !!value
+      value
+    end
+
     def self.shortcuts(shortcuts)
       return [] unless shortcuts
       raise "shortcuts should be a list" unless shortcuts.is_a? Array
