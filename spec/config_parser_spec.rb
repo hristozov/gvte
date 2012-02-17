@@ -236,4 +236,23 @@ END
     expect{get_config(raw_config)}.to raise_error(RuntimeError)
   end
 
+  it "can parse the background color correctly" do
+    raw_config = <<-END
+background_color : 0xDABEDA
+END
+    config = get_config(raw_config)
+
+    config.background_color.should eq [218, 190, 218]
+  end
+
+
+  it "can parse the foreground color correctly" do
+    raw_config = <<-END
+foreground_color : 0xFFCEDD
+END
+    config = get_config(raw_config)
+
+    config.foreground_color.should eq [255, 206, 221]
+  end
+
 end
