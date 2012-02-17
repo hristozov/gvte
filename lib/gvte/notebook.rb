@@ -22,7 +22,7 @@ module Gvte
       }
 
       @keystroke_manager.register_handler(Actions::COPY) { |k|
-        signal_emit_stop("key-press-event")
+        @main_window.signal_emit_stop("key-press-event")
         copy
       }
 
@@ -37,17 +37,17 @@ module Gvte
       }
 
       @keystroke_manager.register_handler(Actions::NEXT_TAB) { |k|
-        signal_emit_stop("key-press-event")
+        @main_window.signal_emit_stop("key-press-event")
         next_page
       }
 
       @keystroke_manager.register_handler(Actions::PASTE) { |k|
-        signal_emit_stop("key-press-event")
+        @main_window.signal_emit_stop("key-press-event")
         paste
       }
 
       @keystroke_manager.register_handler(Actions::PREVIOUS_TAB) { |k|
-        signal_emit_stop("key-press-event")
+        @main_window.signal_emit_stop("key-press-event")
         prev_page
       }
 
