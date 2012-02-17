@@ -9,13 +9,17 @@ module Gvte
 
     # Returns the config object for the current builder instance.
     def config
-      options = Gvte::Config.new()
-      OptionsParser::parse(@argv, options)
-      #XXX: check if the config file is readable
-      if options.config != nil and File.exists?(options.config) and File.readable?(options.config) then
-        ConfigParser::parse(File.open(options.config).read, options)
+      result = Gvte::Config.new
+      OptionsParser::parse(@argv, result)
+      config_file = result.config
+      if config_file and File.exists?(config_file) and File.readable?(config_file) then
+        config_file_options = Gvte::Config.new
+        ConfigParser::parse(File.open(config_file).read, config_file_options)
+        # Override the options in the config file with the ones from the command
+        # line.
+        result = config_file_options + result
       end
-      options
+      result
     end
   end
 end

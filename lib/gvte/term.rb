@@ -5,7 +5,7 @@ module Gvte
       @config = config
 
       pid = self.fork_command(@config.sh, nil, nil, @config.dir)
-      $stderr.puts "Spawned shell (#{pid}) with options #{@config}"
+      #$stderr.puts "Spawned shell (#{pid}) with options #{@config}"
 
       set_appearance_settings
       set_background_image
@@ -26,6 +26,8 @@ module Gvte
         bgcolor = Gdk::Color.new *@config.background_color
         color_background = bgcolor
       end
+      set_size(@config.columns, @config.rows) if @config.columns != nil and @config.rows != nil
+      set_background_transparent @config.transparent if @config.transparent != nil
       set_scrollback_lines @config.scrollback_lines if @config.scrollback_lines != nil
       set_font @config.font, Vte::TerminalAntiAlias::FORCE_ENABLE if @config.font != nil
       set_emulation @config.termtype if @config.termtype != nil

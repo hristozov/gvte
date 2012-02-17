@@ -30,35 +30,64 @@ module Gvte
       metaclass.send :attr_accessor, *CONFIG_VARIABLES.keys
 
       # Default values
-      CONFIG_VARIABLES.each_key { |k|
+      Config.variables.each { |k|
         default_value = Config.variable_default k
         instance_variable_set "@" + k.to_s, default_value if default_value
       }
     end
 
+    # A list with the variables (array of symbols).
     def self.variables
       CONFIG_VARIABLES.keys
     end
 
+    # Returns the type of a variable.
     def self.variable_type(variable_name)
       raise "No such variable #{variable_name.to_s}" unless CONFIG_VARIABLES[variable_name]
       CONFIG_VARIABLES[variable_name.to_sym][0]
     end
 
+    # Returns the description of a variable.
     def self.variable_description(variable_name)
       raise "No such variable #{variable_name.to_s}" unless CONFIG_VARIABLES[variable_name]
       CONFIG_VARIABLES[variable_name.to_sym][1]
     end
 
+    # Returns the default value for a given variable.
     def self.variable_default(variable_name)
       raise "No such variable #{variable_name.to_s}" unless CONFIG_VARIABLES[variable_name]
       CONFIG_VARIABLES[variable_name.to_sym][2]
     end
 
+    # Creates a copy of the current config variable-by-variable.
+    def copy
+      result = Config.new
+      Config.variables.each { |v|
+        our_value = instance_variable_get("@" + v.to_s)
+        result.send(v.to_s + "=", our_value)
+      }
+      result
+    end
+
+    # Compares config objects variable-by-variable.
     def ==(other_config)
       Config.variables.map { |v|
         instance_variable_get("@" + v.to_s) == other_config.send(v)
       }.inject(true, :&)
+    end
+
+    # "Merges" the current config with the given. This means that if the other
+    # config has non-empty and non-default variables, they should override the
+    # ones from the current instance. This has no side-effects, the method
+    # returns a copy with the new configuration.
+    def +(other_config)
+      result = self.copy
+      Config.variables.each { |v|
+        other_value = other_config.send(v.to_s)
+        next unless other_value != nil and other_value != Config.variable_default(v)
+        result.send(v.to_s + "=", other_value)
+      }
+      result
     end
   end
 end
