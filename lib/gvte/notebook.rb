@@ -1,10 +1,11 @@
 module Gvte
   class ShellNotebook < Gtk::Notebook
-    def initialize(config, keystroke_manager)
+    def initialize(config, main_window, keystroke_manager)
       super()
       @config = config
       @bolded_tabs = {}
       @keystroke_manager = keystroke_manager
+      @main_window = main_window
       register_handlers
       signal_connect("page-added", &toggle_tab_bar)
       signal_connect("page-removed", &toggle_tab_bar)
@@ -23,6 +24,16 @@ module Gvte
       @keystroke_manager.register_handler(Actions::COPY) { |k|
         signal_emit_stop("key-press-event")
         copy
+      }
+
+      (1..10).each { |n|
+        action = Actions.const_get("GO_TO_TAB_#{n}".to_sym)
+        @keystroke_manager.register_handler(action) { |k|
+          @main_window.signal_emit_stop("key-press-event")
+          if n <= n_pages
+            self.page = n-1
+          end
+        }
       }
 
       @keystroke_manager.register_handler(Actions::NEXT_TAB) { |k|

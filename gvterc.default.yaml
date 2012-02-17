@@ -30,3 +30,44 @@ shortcuts :
     ctrl   : true
     alt    : true
     key    : 27
+
+  - action : go_to_tab_1
+    alt    : true
+    key    : 10
+
+  - action : go_to_tab_2
+    alt    : true
+    key    : 11
+
+  - action : go_to_tab_3
+    alt    : true
+    key    : 12
+
+  - action : go_to_tab_4
+    alt    : true
+    key    : 13
+
+  - action : go_to_tab_5
+    alt    : true
+    key    : 14
+
+  - action : go_to_tab_6
+    alt    : true
+    key    : 15
+
+  - action : go_to_tab_7
+    alt    : true
+    key    : 16
+
+  - action : go_to_tab_8
+    alt    : true
+    key    : 17
+
+  - action : go_to_tab_9
+    alt    : true
+    key    : 18
+
+  - action : go_to_tab_10
+    alt    : true
+    key    : 19
+

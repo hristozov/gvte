@@ -5,7 +5,7 @@ module Gvte
       @keystroke_manager = GTKKeystrokeManagerFactory.get_manager(config, self)
       signal_connect("destroy", &quit)
       
-      @nb = ShellNotebook.new(config, @keystroke_manager)
+      @nb = ShellNotebook.new(config, self, @keystroke_manager)
       @nb.add_shell
       @nb.signal_connect("page-removed") { 
         signal_emit("destroy") if @nb.n_pages == 0 
